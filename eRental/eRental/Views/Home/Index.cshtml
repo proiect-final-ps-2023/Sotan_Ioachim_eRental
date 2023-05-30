@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        p {
+            color: #666;
+            text-align: center;
+            font-size: 18px;
+        }
+</style>
+
+<div class="text-center">
+
+    <div class="container">
+        <h1>Welcome to eRental</h1>
+        <p>Experience the joy of renting a car with us!</p>
+        <button class="btn btn-primary" onclick="serializeData()">Serialize Data</button>
+    </div>
+
+
+</div>
+
+<script>
+    function serializeData() {
+        fetch('/Rental/SerializeData')  // Replace '/Rental/SerializeData' with '/Role/SerializeData'
+            .then(response => {
+                alert("Serialization Successful!");
+            })
+            .catch(error => {
+                console.log('Serialization error:', error);
+            });
+    }
+</script>

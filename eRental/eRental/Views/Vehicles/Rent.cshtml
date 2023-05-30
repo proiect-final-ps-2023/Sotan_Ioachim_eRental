@@ -1,0 +1,83 @@
+﻿@model eRental.Models.Vehicle
+
+@{
+    ViewData["Title"] = "Rent";
+}
+
+<h1>Rent</h1>
+
+<h3>Are you sure you want to rent this?</h3>
+<div>
+    <h4>Vehicle</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Make)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Make)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Model)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Model)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Year)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Year)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+    </dl>
+
+    <h3>Please select the rental dates:</h3>
+
+    <form asp-action="Rent">
+        <input type="hidden" asp-for="VehicleId" />
+
+        <div class="form-group">
+            <label for="rentalDate">Rental Date:</label>
+            <input type="date" id="rentalDate" name="rentalDate" class="form-control" required style="max-width: 200px;" onchange="updateReturnDateMin()" />
+        </div>
+
+        <div class="form-group">
+            <label for="returnDate">Return Date:</label>
+            <input type="date" id="returnDate" name="returnDate" class="form-control" required style="max-width: 200px;" />
+        </div>
+
+        <input type="submit" value="Rent" onclick="confirmationPopUp()" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+
+        <script>
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById("rentalDate").setAttribute("min", today);
+            document.getElementById("returnDate").setAttribute("min", today);
+
+            function updateReturnDateMin() {
+                const rentalDate = document.getElementById("rentalDate").value;
+                document.getElementById("returnDate").setAttribute("min", rentalDate);
+            }
+        </script>
+    </form>
+
+
+</div>
+
+<script>
+    function confirmationPopUp(){
+        alert("Your rental has been Confirmed!");
+    }
+</script>

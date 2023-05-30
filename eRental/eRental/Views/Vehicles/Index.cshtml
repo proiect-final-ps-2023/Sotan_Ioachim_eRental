@@ -1,0 +1,155 @@
+﻿@model IEnumerable<eRental.Models.Vehicle>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style>
+    h1 {
+        text-align: center;
+    }
+    p {
+        text-align: center;
+    }
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .search-form {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .search-form input[type="text"] {
+        padding: 8px;
+        font-size: 16px;
+        width: 70%;
+    }
+
+    .search-form button {
+        padding: 8px 16px;
+        font-size: 16px;
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .search-form button:hover {
+        background-color: #45a049;
+    }
+
+    .sort-form {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .sort-form label {
+        margin-right: 10px;
+        font-weight: bold;
+    }
+
+    .sort-form select {
+        padding: 8px;
+        font-size: 16px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+    }
+
+    .actions a {
+        margin-right: 5px;
+        color: #007bff;
+        text-decoration: none;
+    }
+</style>
+
+<div class="container">
+    <h1>Find your way to go!</h1>
+    <p>Here you can find and rent your desired vehicle to move around!</p>
+
+    <div>
+        <form asp-action="OrderByPrice">
+            <div>
+                <label for="orderByPrice">Order By Price:</label>
+                <select id="orderByPrice" name="OrderByPrice">
+                    <option value="Descending">Price Descending</option>
+                    <option value="Ascending">Price Ascending</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+
+    <div class="search-form">
+        <form asp-action="ShowSearchResults">
+            <div class="form-group">
+                <label for="SearchPhrase" class="control-label"></label>
+                <input name="SearchPhrase" class="form-control"/>
+
+            </div>
+            <div class="form-group">
+                <input type ="submit" value="Search" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Make)</th>
+                <th>@Html.DisplayNameFor(model => model.Model)</th>
+                <th>@Html.DisplayNameFor(model => model.Year)</th>
+                <th>@Html.DisplayNameFor(model => model.Type)</th>
+                <th>@Html.DisplayNameFor(model => model.Price)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Make)</td>
+                <td>@Html.DisplayFor(modelItem => item.Model)</td>
+                <td>@Html.DisplayFor(modelItem => item.Year)</td>
+                <td>@Html.DisplayFor(modelItem => item.Type)</td>
+                <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                <td class="actions">
+                    <a asp-action="Rent" asp-route-id="@item.VehicleId">Rent</a>
+                </td>
+            </tr>
+         }
+        </tbody>
+    </table>
+
+</div>
+
+<script>
+    function submitForm() {
+        const sortOption = document.getElementById("sortOption").value;
+        const form = document.querySelector("form");
+        form.action += `?sort=${sortOption}`;
+        form.submit();
+    }
+</script>
